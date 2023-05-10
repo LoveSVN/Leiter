@@ -31,20 +31,19 @@ DEPENDENCIES:
   - WCDB.swift (~> 1.0.7)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Amplitude-iOS
     - ionicons
     - MJRefresh
     - ReactiveCocoa
     - ReactiveSwift
+    - SGQRCode
     - SnapKit
     - SQLiteRepairKit
     - SVProgressHUD
     - VTAcknowledgementsViewController
     - WCDB.swift
     - WCDBOptimizedSQLCipher
-  trunk:
-    - SGQRCode
 
 EXTERNAL SOURCES:
   SPBaseKit:
@@ -71,6 +70,6 @@ SPEC CHECKSUMS:
   WCDB.swift: 05d509d7a0e60fb6e11c34eb7e4027c0fab5849f
   WCDBOptimizedSQLCipher: baf44493b0c7a3d49e97bc5b64a3856f6428ddd1
 
-PODFILE CHECKSUM: a1bab8b9353a1f663c81b5028797b521c27887c1
+PODFILE CHECKSUM: 325c4c62367855917bd974e8087435c29ea27b1f
 
-COCOAPODS: 1.8.0
+COCOAPODS: 1.12.1
