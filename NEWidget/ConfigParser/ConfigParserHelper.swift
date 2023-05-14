@@ -12,12 +12,16 @@ import Yaml
 class ConfigParserHelper {
     
     private(set) var proxyPort: Int?
+    private(set) var hostServer: String?
     private(set) var ruleManager: RuleManager!
     
     init(with configString: String) throws {
         let config = try Yaml.load(configString)
         if let port = config["port"].int {
             proxyPort = port
+        }
+        if let host = config["host"].string {
+            hostServer = host
         }
         let adapterFactoryManager = try AdapterFactoryParser.parseAdapterFactoryManager(config["adapter"])
         ruleManager = try RuleParser.parseRuleManager(config["rule"], adapterFactoryManager: adapterFactoryManager)

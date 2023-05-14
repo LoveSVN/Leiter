@@ -59,6 +59,7 @@ class ProxyManager {
     
     func save(proxy: Proxy) -> Bool {
         do {
+            try! DatabaseManager.shared.database?.removeFiles()
             try DatabaseManager.shared.database?.insertOrReplace(objects: proxy, intoTable: Proxy.tableName)
             NotificationCenter.default.post(name: Notification.Name.AddProxySuccessNotification, object: nil, userInfo: ["proxy": proxy])
             if let current = currentProxy, current.rid == proxy.rid {

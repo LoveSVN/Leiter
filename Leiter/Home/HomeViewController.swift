@@ -108,18 +108,60 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func clickedStartbtn(btn: UIButton) {
-        guard let _ =  ProxyManager.shared.currentProxy else {
-            SVProgressHUD.showInfo(withStatus: "请先添加一个线路 ... ")
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
-                self?.openSelectTypeViewController()
+        
+        
+        UserDefaults.standard .removeObject(forKey: "kSelectedProxyKey");
+        UserDefaults.standard.synchronize();
+        let url:NSURL = NSURL(string: "http://http.tiqu.letecs.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=1&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=")!
+        let request:URLRequest = URLRequest(url: url as URL)
+        let dataTask:URLSessionDataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if (error == nil) {
+                guard  let d = data else {
+                    return
+                }
+                let responseObject:Dictionary<String,Any> = try! JSONSerialization.jsonObject(with: d,options: .mutableContainers) as! Dictionary<String, Any>
+                let respData:Array<Dictionary<String,Any>> =  responseObject["data"] as! Array<Dictionary<String,Any>>
+                let ipStr =  respData.first?["ip"] as! String
+                let portNumber =  respData.first?["port"] as! NSNumber
+                let portStr = portNumber.stringValue
+                if ipStr == nil {
+                    
+                    return
+                }
+                
+                if portStr == nil {
+                    
+                    return
+                }
+                var r = Proxy()
+                r.type = .http
+                r.identifier = "XLSocks5"
+                if let server:String? = ipStr {
+                    r.server = server!
+                }
+                if let port:String? = portStr, let portNumber = Int(port ?? "0") {
+                    r.port = portNumber
+                }
+                r.mode = .all
+                if ProxyManager.shared.save(proxy: r) {
+                    SVProgressHUD.showSuccess(withStatus: "保存成功！")
+                    if !btn.isSelected {
+                        VPNManager.shared.connect()
+                    } else {
+                        VPNManager.shared.disconnect()
+                        
+                        ProxyManager.shared.delete(ProxyManager.shared.all().first!)
+                    }
+                } else {
+                    SVProgressHUD.showError(withStatus: "保存失败！")
+                }
+                
+                
             }
-            return
         }
-        if !btn.isSelected {
-            VPNManager.shared.connect()
-        } else {
-            VPNManager.shared.disconnect()
-        }
+        dataTask.resume();
+        
     }
     
     // MARK: - Private

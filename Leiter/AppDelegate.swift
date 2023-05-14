@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+
+
 extension AppDelegate {
     private func commonUI() {
         UIApplication.shared.statusBarStyle = .lightContent

@@ -231,8 +231,8 @@
 			isa = PBXGroup;
 			children = (
 				D60DADF920EBCB5A00DE39F1 /* config.template.http.all.yaml */,
-				D60DADF820EBCB5A00DE39F1 /* config.template.http.general.yaml */,
 				D60DADF620EBCB5A00DE39F1 /* config.template.socks5.all.yaml */,
+				D60DADF820EBCB5A00DE39F1 /* config.template.http.general.yaml */,
 				D60DADF520EBCB5A00DE39F1 /* config.template.socks5.general.yaml */,
 				D60DADF720EBCB5A00DE39F1 /* config.template.ss.all.yaml */,
 				D60DADFA20EBCB5A00DE39F1 /* config.template.ss.general.yaml */,

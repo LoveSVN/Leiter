@@ -115,7 +115,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 
                 let dnsServer = DNSServer(address: IPAddress(fromString: "198.18.0.1")!, port: NEKit.Port(port: 53), fakeIPPool: fakeIPPool)
                 let resolver = UDPDNSResolver(address: IPAddress(fromString: "114.114.114.114")!, port: NEKit.Port(port: 53))
-                dnsServer.registerResolver(resolver)
+//                dnsServer.registerResolver(resolver)
                 self.interface.register(stack: dnsServer)
                 
                 DNSServer.currentServer = dnsServer
@@ -126,6 +126,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 tcpStack.proxyServer = self.proxyServer
                 self.interface.register(stack:tcpStack)
                 self.interface.start()
+                
+                try! self.proxyServer.start() 
             }
             self.started = true
         }
