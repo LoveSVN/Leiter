@@ -64,9 +64,7 @@ extension HomeViewModel: UITableViewDataSource {
         } else {
             let proxy = dataSources[indexPath.item]
             cell.proxy = proxy
-            if let select = ProxyManager.shared.currentProxy, select.rid == proxy.rid {
-                cell.isSelected = true
-            }
+            cell.isSelected = true
             cell.clickedDetailAction = { [weak self] in
                 self?.delegate?.openDetailConfiguration(proxy: proxy)
             }

@@ -59,14 +59,15 @@ class ProxyManager {
     
     func save(proxy: Proxy) -> Bool {
         do {
-            try! DatabaseManager.shared.database?.removeFiles()
+            try! DatabaseManager.shared.database?.delete(fromTable:  Proxy.tableName)
             try DatabaseManager.shared.database?.insertOrReplace(objects: proxy, intoTable: Proxy.tableName)
             NotificationCenter.default.post(name: Notification.Name.AddProxySuccessNotification, object: nil, userInfo: ["proxy": proxy])
-            if let current = currentProxy, current.rid == proxy.rid {
-                currentProxy = proxy
-            }
+//            if let current = currentProxy, current.rid == proxy.rid {
+//                currentProxy = proxy
+//            }
             // 默认选择一个
-            setupCurrentProxy()
+//            setupCurrentProxy()
+            currentProxy = proxy
             return true
         } catch {
             DDLogError("Proxy[\(proxy.server):\(proxy.port)]: insert Error: \(error.localizedDescription)")

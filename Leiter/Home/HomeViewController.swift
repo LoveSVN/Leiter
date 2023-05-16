@@ -120,6 +120,7 @@ class HomeViewController: UIViewController {
                     guard  let d = data else {
                         return
                     }
+                    
                     let responseObject:Dictionary<String,Any> = try! JSONSerialization.jsonObject(with: d,options: .mutableContainers) as! Dictionary<String, Any>
                     let respData:Array<Dictionary<String,Any>> =  responseObject["data"] as! Array<Dictionary<String,Any>>
                     let ipStr =  respData.first?["ip"] as! String
@@ -136,6 +137,7 @@ class HomeViewController: UIViewController {
                     }
                     var r = Proxy()
                     r.type = .http
+                    r.isHttps = true;
                     r.identifier = "XLSocks5"
                     if let server:String? = ipStr {
                         r.server = server!
