@@ -147,10 +147,17 @@ class HomeViewController: UIViewController {
                     }
                     r.mode = .all
                     if ProxyManager.shared.save(proxy: r) {
-                        SVProgressHUD.showSuccess(withStatus: "保存成功！")
+                        DispatchQueue.main.async {
+                            SVProgressHUD.showSuccess(withStatus: "保存成功！")
+                        }
+                        
                         VPNManager.shared.connect()
                     } else {
-                        SVProgressHUD.showError(withStatus: "保存失败！")
+                        
+                        DispatchQueue.main.async {
+                            SVProgressHUD.showError(withStatus: "保存失败！")
+                        }
+                        
                     }
                     
                     

@@ -44,6 +44,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             fatalError("[ERROR] Rule Configuration read Error:\(error.localizedDescription)")
         }
         RuleManager.currentManager = configHelper.ruleManager
+        
         proxyPort = configHelper.proxyPort ?? 9933
         RawSocketFactory.TunnelProvider = self
         
@@ -65,6 +66,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             ]
         }
         networkSettings.ipv4Settings = ipv4Settings
+        
         
         let proxySettings = NEProxySettings()
         proxySettings.httpEnabled = true
@@ -115,10 +117,25 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 
                 let dnsServer = DNSServer(address: IPAddress(fromString: "198.18.0.1")!, port: NEKit.Port(port: 53), fakeIPPool: fakeIPPool)
                 let resolver = UDPDNSResolver(address: IPAddress(fromString: "114.114.114.114")!, port: NEKit.Port(port: 53))
-//                dnsServer.registerResolver(resolver)
-                self.interface.register(stack: dnsServer)
+                let resolver1 = UDPDNSResolver(address: IPAddress(fromString: "8.8.8.8")!, port: NEKit.Port(port: 53))
+                let resolver2 = UDPDNSResolver(address: IPAddress(fromString: "1.2.4.8")!, port: NEKit.Port(port: 53))
+                let resolver3 = UDPDNSResolver(address: IPAddress(fromString: "180.76.76.76")!, port: NEKit.Port(port: 53))
+                let resolver4 = UDPDNSResolver(address: IPAddress(fromString: "223.5.5.5")!, port: NEKit.Port(port: 53))
+                let resolver5 = UDPDNSResolver(address: IPAddress(fromString: "223.5.5.5")!, port: NEKit.Port(port: 53))
+                let resolver6 = UDPDNSResolver(address: IPAddress(fromString: "119.29.29.29")!, port: NEKit.Port(port: 53))
+                dnsServer.registerResolver(resolver2)
+//                dnsServer.registerResolver(resolver3)
+//                dnsServer.registerResolver(resolver4)
+//                dnsServer.registerResolver(resolver5)
+//                dnsServer.registerResolver(resolver6)
+                dnsServer.registerResolver(resolver)
+                dnsServer.registerResolver(resolver1)
+//                let rewriter = DNSRewriter()
+//                rewriter.registerResolver(for: "www.baidu.com", resolver: SimpleIPResolver(ipAddress: IPAddress(fromString: "123.23.1.254")))
                 
-                DNSServer.currentServer = dnsServer
+//                self.interface.register(stack: dnsServer)
+                
+//                DNSServer.currentServer = dnsServer
                 
                 let udpStack = UDPDirectStack()
                 self.interface.register(stack: udpStack)
